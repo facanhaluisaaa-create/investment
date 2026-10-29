@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Investir Fácil</title>
+  <meta name="description" content="Entenda e melhore seus investimentos em linguagem simples, mesmo que você não goste do assunto.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#inicio">
+        <span class="brand-mark" aria-hidden="true">$</span>
+        Investir Fácil
+      </a>
+      <nav class="nav" aria-label="Seções">
+        <button data-nav="inicio" aria-current="page">Início</button>
+        <button data-nav="perfil">1. Meu perfil</button>
+        <button data-nav="simulador">2. Simulador</button>
+        <button data-nav="carteira">3. Minha carteira</button>
+        <button data-nav="dicionario">Dicionário</button>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro e escuro" title="Tema">◐</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= INÍCIO ================= -->
+    <section data-page="inicio" class="active">
+      <div class="hero">
+        <h1>Investir não precisa ser complicado.</h1>
+        <p class="lead">Em três passos curtos você descobre que tipo de investidor é, vê quanto seu dinheiro pode crescer e recebe um diagnóstico simples do que já tem. Sem jargão, sem planilha, sem precisar gostar do assunto.</p>
+        <div class="btn-row">
+          <button class="btn btn-lg" data-nav="perfil">Começar pelo meu perfil</button>
+          <button class="btn btn-secondary btn-lg" data-nav="simulador">Só quero simular</button>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top: 24px;">
+        <div class="card">
+          <h2>Como funciona</h2>
+          <div class="steps">
+            <button class="step" data-nav="perfil">
+              <span class="step-num">1</span>
+              <div><strong>Descubra seu perfil</strong><span>Cinco perguntas rápidas. Saímos com uma divisão sugerida para o seu dinheiro.</span></div>
+            </button>
+            <button class="step" data-nav="simulador">
+              <span class="step-num">2</span>
+              <div><strong>Veja o dinheiro crescer</strong><span>Escolha quanto guardar por mês e compare com deixar na poupança ou parado.</span></div>
+            </button>
+            <button class="step" data-nav="carteira">
+              <span class="step-num">3</span>
+              <div><strong>Melhore o que já tem</strong><span>Anote onde seu dinheiro está hoje e receba dicas do que ajustar.</span></div>
+            </button>
+          </div>
+          <div id="home-status"></div>
+        </div>
+        <div class="card">
+          <h2>Cinco regras que resolvem quase tudo</h2>
+          <div id="dicas" class="stack"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PERFIL ================= -->
+    <section data-page="perfil">
+      <div class="page-head">
+        <span class="step-tag">Passo 1</span>
+        <h1>Que tipo de investidor você é?</h1>
+        <p class="lead">Não existe resposta certa. O objetivo é descobrir quanto sobe e desce você aguenta e por quanto tempo o dinheiro pode ficar guardado.</p>
+      </div>
+
+      <div id="quiz" class="card">
+        <div class="quiz-progress"><div id="quiz-bar" style="width: 0%"></div></div>
+        <p class="muted small" id="quiz-counter"></p>
+        <h2 id="quiz-question"></h2>
+        <div class="options" id="quiz-options"></div>
+        <div class="btn-row" style="margin-top: 20px;">
+          <button class="btn btn-secondary" id="quiz-back">Voltar</button>
+          <button class="btn" id="quiz-next" disabled>Próxima</button>
+        </div>
+      </div>
+
+      <div id="perfil-resultado" class="hidden stack"></div>
+    </section>
+
+    <!-- ================= SIMULADOR ================= -->
+    <section data-page="simulador">
+      <div class="page-head">
+        <span class="step-tag">Passo 2</span>
+        <h1>Quanto seu dinheiro pode virar?</h1>
+        <p class="lead">Mexa nos valores e veja a diferença entre investir, deixar na poupança e deixar parado. O segredo aqui se chama juros compostos: os juros rendem sobre os juros.</p>
+      </div>
+
+      <div class="grid grid-side">
+        <div class="card">
+          <div class="field">
+            <label for="sim-inicial">Quanto você tem para começar <span class="help">Pode ser zero.</span></label>
+            <div class="input-prefix"><span>R$</span><input type="number" id="sim-inicial" min="0" step="100" value="1000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sim-mensal">Quanto consegue guardar por mês</label>
+            <div class="input-prefix"><span>R$</span><input type="number" id="sim-mensal" min="0" step="50" value="300" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sim-anos">Por quanto tempo: <span class="range-value" id="sim-anos-valor">10 anos</span></label>
+            <input type="range" id="sim-anos" min="1" max="40" value="10">
+          </div>
+          <div class="field">
+            <label for="sim-taxa">Onde o dinheiro vai render <span class="help">Taxas estimadas, para comparação. O futuro pode ser diferente.</span></label>
+            <select id="sim-taxa"></select>
+          </div>
+          <div class="field">
+            <label for="sim-taxa-custom">Ou ajuste a taxa: <span class="range-value" id="sim-taxa-valor">10% ao ano</span></label>
+            <input type="range" id="sim-taxa-custom" min="0" max="20" step="0.5" value="10">
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="muted" style="margin-bottom: 4px;">Ao final, você teria</p>
+          <div class="hero-number" id="sim-total">R$ 0</div>
+          <p id="sim-frase" class="lead" style="margin-top: 8px;"></p>
+          <div class="stats" id="sim-stats"></div>
+          <h3 style="margin-top: 24px;">A evolução ano a ano</h3>
+          <div class="legend" id="sim-legend"></div>
+          <div class="chart-wrap" id="sim-chart"></div>
+          <div class="btn-row" style="margin-top: 12px;">
+            <button class="btn btn-ghost" id="sim-table-toggle" aria-expanded="false">Ver em tabela</button>
+          </div>
+          <div id="sim-table" class="hidden"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px;">
+        <h3>O que esse gráfico ensina</h3>
+        <div id="sim-licoes" class="stack"></div>
+      </div>
+    </section>
+
+    <!-- ================= CARTEIRA ================= -->
+    <section data-page="carteira">
+      <div class="page-head">
+        <span class="step-tag">Passo 3</span>
+        <h1>Onde seu dinheiro está hoje?</h1>
+        <p class="lead">Anote o que você já tem, mesmo que seja só a poupança. A gente compara com a divisão sugerida para o seu perfil e aponta o que vale ajustar. Tudo fica salvo só no seu navegador.</p>
+      </div>
+
+      <div class="grid grid-side">
+        <div class="card">
+          <h3>Adicionar investimento</h3>
+          <form id="holding-form">
+            <div class="field">
+              <label for="h-nome">Nome <span class="help">Como você chama. Ex.: "Poupança do Itaú", "CDB Nubank".</span></label>
+              <input type="text" id="h-nome" required maxlength="60" placeholder="Ex.: Tesouro Selic">
+            </div>
+            <div class="field">
+              <label for="h-cat">Tipo <span class="help">Não sabe? Veja o Dicionário ou escolha "Outros".</span></label>
+              <select id="h-cat"></select>
+              <p class="small muted" id="h-cat-help" style="margin: 6px 0 0;"></p>
+            </div>
+            <div class="field">
+              <label for="h-valor">Quanto tem hoje</label>
+              <div class="input-prefix"><span>R$</span><input type="number" id="h-valor" required min="0.01" step="0.01" inputmode="decimal" placeholder="0,00"></div>
+            </div>
+            <button class="btn" type="submit">Adicionar</button>
+          </form>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="compare-head">
+              <h3 style="margin: 0;">Sua carteira</h3>
+              <strong id="cart-total"></strong>
+            </div>
+            <ul class="holdings" id="holdings"></ul>
+            <div id="cart-empty" class="empty">Nada por aqui ainda. Adicione o primeiro investimento ao lado.</div>
+            <div class="btn-row" style="margin-top: 12px;">
+              <button class="btn btn-ghost" id="cart-export">Baixar cópia (CSV)</button>
+              <button class="btn btn-danger" id="cart-clear">Apagar tudo</button>
+            </div>
+          </div>
+
+          <div class="card" id="cart-analise-card">
+            <h3>Como está dividido</h3>
+            <div class="alloc" id="cart-alloc" role="img" aria-label="Divisão atual da carteira"></div>
+            <div class="legend" id="cart-legend"></div>
+            <div id="cart-compare" style="margin-top: 16px;"></div>
+          </div>
+
+          <div class="card">
+            <h3>Diagnóstico simples</h3>
+            <div id="cart-diagnostico" class="stack"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DICIONÁRIO ================= -->
+    <section data-page="dicionario">
+      <div class="page-head">
+        <span class="step-tag">Apoio</span>
+        <h1>Dicionário sem jargão</h1>
+        <p class="lead">Cada termo em duas frases e uma comparação do dia a dia. Digite para buscar.</p>
+      </div>
+      <div class="dict-search">
+        <label for="dict-q" class="sr-only">Buscar termo</label>
+        <input type="search" id="dict-q" placeholder="Buscar: CDI, liquidez, ETF...">
+      </div>
+      <div class="dict-list" id="dict-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Importante:</strong> este site é educativo. Ele não vende investimentos e não substitui uma orientação profissional. As taxas do simulador são estimativas para comparação, não promessas. Nada aqui é recomendação de compra ou venda.</p>
+    <p>Seus dados ficam apenas no seu navegador. Nada é enviado para nenhum servidor.</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
